@@ -1,0 +1,16 @@
+**/.angular
+**/.dockerignore
+**/.git
+**/.gitignore
+**/.vs
+**/.vscode
+**/*.user
+**/bin
+**/docker-compose*
+**/Dockerfile*
+**/node_modules
+**/publish
+**/obj
+client/src/app/proto
+LICENSE
+README.md

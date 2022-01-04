@@ -1,0 +1,12 @@
+.angular
+.env
+.vs
+.vscode
+bin
+client/src/app/proto
+node_modules
+obj
+publish
+wwwroot
+
+*.user
