@@ -4,6 +4,7 @@
 
 ### Prerequisites
 
+* [Visual Studio 2022](https://visualstudio.microsoft.com/vs/)
 * [dotnet 6 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
 * [Node.js LTS](https://nodejs.org/en/)
 
@@ -80,8 +81,6 @@ app.Run();
 
 * add `npm i -D grpc-web-ts-compiler`
 
-* add `client/src/app/proto` to `.gitignore` and `.dockerignore`
-
 * add scripts to `package.json`
 
 ```json
@@ -95,6 +94,10 @@ app.Run();
 }
 ```
 
+* generate proto helper files `npm run proto`
+
+* add the generated folder `client/src/app/proto` to `.gitignore` and `.dockerignore`
+
 * create a grpc service `ng g s greeter` with:
 
 ```ts
@@ -106,20 +109,11 @@ import { HelloRequest, HelloReply } from "./proto/greet_pb"
 export class GreeterService {
   private readonly client = new GreeterClient(location.origin, { debug: true });
 
-  // on Windows, `optional` proto props are not marked with `?` in generated `.d.ts`
-  // on Linux, `optional` proto props are not recognized by libprotoc 3.6.1
-  // for safety, declare `props: Partial<HelloRequest.AsObject>` and validate props individually
-  async sayHello(props: Partial<HelloRequest.AsObject>) {
+  async sayHello(props: HelloRequest.AsObject) {
     const request = new HelloRequest();
 
-    // required prop
-    if (props.name === undefined)
-      throw Error(`"name" prop is required`);
     request.setName(props.name);
-
-    // // optional prop
-    // if (props.client !== undefined)
-    //   request.setClient(props.client);
+    request.setClient(props.client);
 
     return new Promise<HelloReply.AsObject>((resolve, reject) =>
       this.client.sayHello(
@@ -153,7 +147,10 @@ export class AppComponent implements OnInit {
 
   sayHelloResponse: any;
 
-  readonly greet = () => this.greeter.sayHello({ name: "simple grpc demo" });
+  readonly greet = () => this.greeter.sayHello({ 
+    name: "simple grpc demo",
+    client: "" /* optional proto prop requires a default value provided */
+  });
 
   async ngOnInit() {
     this.sayHelloResponse = await this.greet().catch(err => err);

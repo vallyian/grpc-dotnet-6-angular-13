@@ -15,7 +15,10 @@ export class AppComponent implements OnInit {
 
     sayHelloResponse: any;
 
-    readonly greet = () => this.greeter.sayHello({ name: "simple grpc demo" });
+    readonly greet = () => this.greeter.sayHello({
+        name: "simple grpc demo",
+        client: "" /* optional proto prop requires a default value provided */
+    });
 
     async ngOnInit() {
         this.sayHelloResponse = await this.greet().catch(err => err);
