@@ -77,6 +77,8 @@ app.Run();
 
 * add `existing website` => select `client`
 
+* sln => unset client build in all configurations
+
 * `cd client`
 
 * add `npm i -D grpc-web-ts-compiler`
