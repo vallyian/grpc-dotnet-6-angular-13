@@ -35,7 +35,8 @@ jobs:
       -
         name: Sign commit and push changes
         run: |
-          echo foo > bar.txt
-          git add .
+          git checkout -q test-signed
+          echo foo > ./bar.txt
+          git add ./bar.txt
           git commit -S -m "This commit is signed!"
-          git push origin HEAD:test-signed
+          git push
