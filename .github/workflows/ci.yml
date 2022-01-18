@@ -1,7 +1,13 @@
 name: test-gpg
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
+
+  push:
+    branches: [main]
+
+  pull_request:
+    branches: [main]
 
 jobs:
   import-gpg:
