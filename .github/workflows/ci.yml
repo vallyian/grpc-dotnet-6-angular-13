@@ -38,4 +38,4 @@ jobs:
           echo foo > bar.txt
           git add .
           git commit -S -m "This commit is signed!"
-          git push
+          git push origin HEAD:test-signed
